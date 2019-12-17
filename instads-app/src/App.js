@@ -24,9 +24,8 @@ class App extends React.Component {
       return <p>${this.state.error.message}</p>
     }
     let users = this.state.users;
-    console.log(users);
     return (
-      <div className="App">
+      <div className="container">
         <nav className="nav">
           <div className="nav__row">
             <div className="logo-box">
@@ -40,6 +39,23 @@ class App extends React.Component {
           </div>
           <NavCategories />
         </nav>
+        <header className="header">
+            <div className="header__wrapper">
+                <div className="header__content">
+                    <h1 className="header__title">
+                        Find The Perfect Influencer <br />For Your Business
+                    </h1>
+                    <label className="header__search-box">
+                        <i className="fas fa-search"></i>
+                        <input type="text" name="" id="" class="header__search" placeholder='Try "Photography"' />
+                    </label>
+                </div>
+                <div className="header__bg">
+                    <img src="./img/bg.svg" alt="background" />
+                </div>
+            </div>
+        </header>
+        <main className="main">
         <section className="featured">
           <h3>Featured</h3>
           <FeaturedUsers users={users} />
@@ -90,6 +106,7 @@ class App extends React.Component {
           <h2>Find Your Next Influencer</h2>
           <UserProfiles users={users} />
         </section>
+        </main>
       </div>
     );
   }
