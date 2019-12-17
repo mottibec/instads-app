@@ -2,22 +2,22 @@ import React from "react";
 
 class UserBox extends React.Component {
     render() {
-        const instagramUrl = `https://instagram.com/${this.props.instagram}`;
-        const whatsappUrl = `https://wa.me/${this.props.whatsapp}`;
-        const mailUrl = `mailto:${this.props.email}`;
+        const instagramUrl = `https://instagram.com/${this.props.user.instagram}`;
+        const whatsappUrl = `https://wa.me/${this.props.user.whatsapp}`;
+        const mailUrl = `mailto:${this.props.user.email}`;
         return (<div className="profile">
             <div className="profile__bg">
-                <img src={this.props.topPost} alt="" className="profile__img" />
+                <img src={this.props.user.topPost} alt="" className="profile__img" />
             </div>
             <div className="profile__content">
                 <div className="profile__img">
-                    <img src={this.props.avatar} alt="" />
+                    <img src={this.props.user.avatar} alt="" />
                 </div>
                 <div className="profile__personal-info">
-                    <h4 className="profile__name">{this.props.name}</h4>
+                    <h4 className="profile__name">{this.props.user.name}</h4>
                     <div className="profile__location">
                         <i className="fas fa-map-marker-alt"></i>
-                        <p>{this.props.user}</p>
+                        <p>{this.props.user.location}</p>
                     </div>
                 </div>
                 <div className="profile__contact">
@@ -34,7 +34,7 @@ class UserBox extends React.Component {
             </div >
             <div className="profile__stats">
                 <div className="profile__followers">
-                    <h4>{this.props.followersCount}</h4>
+                    <h4>{this.props.user.followersCount}</h4>
                     <p>Followers</p>
                 </div>
                 <div className="profile__real">
@@ -42,7 +42,7 @@ class UserBox extends React.Component {
                     <p>Real Users</p>
                 </div>
                 <div className="profile__price">
-                    <h4>{this.props.priceForPost}$</h4>
+                    <h4>{this.props.user.priceForPost}$</h4>
                     <p>/Post</p>
                 </div>
             </div>
