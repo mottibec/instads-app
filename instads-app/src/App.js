@@ -49,12 +49,12 @@ class App extends React.Component {
     this.setState({ isSignupModalOpen: false });
   }
   login(authData) {
-    this._api.login(authData);
-    this.closeLoginModal();
+    this._api.login(authData)
+      .then(() => this.closeLoginModal());
   }
   signup(signupData) {
-    this._api.signup(signupData);
-    this.closeSignupModal();
+    this._api.signup(signupData)
+      .then(() => this.closeSignupModal());
   }
   render() {
     if (!this.state.users && !this.state.error) {
@@ -78,7 +78,8 @@ class App extends React.Component {
               <div className="nav__list">
                 <a href="">Contact</a>
                 <a href="">Help</a>
-                <button onClick={this.openLoginModal} className="join trigger">Become an Influencer</button>
+                <a onClick={this.openLoginModal}>Sign in</a>
+                <button onClick={this.openSignupModal} className="join trigger">Become an Influencer</button>
               </div>
             </div>
             <NavCategories />

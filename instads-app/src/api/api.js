@@ -9,7 +9,7 @@ class Api {
     }
     async login(auth) {
         var response = await axios.post(`${this.rootUrl}/auth/login`, auth);
-        this.setToken(response.data);
+        this.setToken(response.data.access_token);
     }
     async signup(signupData) {
         var response = await axios.post(`${this.rootUrl}/auth/signup`, signupData);
