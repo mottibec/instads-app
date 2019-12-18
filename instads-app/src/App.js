@@ -7,14 +7,20 @@ import Api from './api/api';
 import NavCategories from './components/navCategories';
 
 class App extends React.Component {
+  _api;
   constructor(props) {
     super(props);
-    this.state = { users: null, error: null };
+    this.state = { filter: null, users: null, error: null };
+    this._api = new Api();
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
   componentDidMount() {
-    new Api().getUsers()
+    this._api.getUsers()
       .then(users => { this.setState({ users: users, error: null }); })
       .catch(error => { this.setState({ error: error }); });
+  }
+  handleFilterChange(event) {
+    this.setState({ filter: event.target.value });
   }
   render() {
     if (!this.state.users && !this.state.error) {
@@ -24,6 +30,9 @@ class App extends React.Component {
       return <p>${this.state.error.message}</p>
     }
     let users = this.state.users;
+    if (this.state.filter) {
+      users = users.filter(user => user.name.includes(this.state.filter));
+    }
     return (
       <div className="container">
         <nav className="nav">
@@ -40,72 +49,72 @@ class App extends React.Component {
           <NavCategories />
         </nav>
         <header className="header">
-            <div className="header__wrapper">
-                <div className="header__content">
-                    <h1 className="header__title">
-                        Find The Perfect Influencer <br />For Your Business
+          <div className="header__wrapper">
+            <div className="header__content">
+              <h1 className="header__title">
+                Find The Perfect Influencer <br />For Your Business
                     </h1>
-                    <label className="header__search-box">
-                        <i className="fas fa-search"></i>
-                        <input type="text" name="" id="" class="header__search" placeholder='Try "Photography"' />
-                    </label>
-                </div>
-                <div className="header__bg">
-                    <img src="./img/bg.svg" alt="background" />
-                </div>
+              <label className="header__search-box">
+                <i className="fas fa-search"></i>
+                <input type="text" name="" id="" onChange={this.handleFilterChange} className="header__search" placeholder='Try "Photography"' />
+              </label>
             </div>
+            <div className="header__bg">
+              <img src="./img/bg.svg" alt="background" />
+            </div>
+          </div>
         </header>
         <main className="main">
-        <section className="featured">
-          <h3>Featured</h3>
-          <FeaturedUsers users={users} />
-        </section>
-        <section className="categories">
-          <h3>Categories</h3>
-          <div className="categories__container">
-            <a href="" className="category">
-              <i className="fas fa-volleyball-ball"></i>
-              <p className="category__text">Sports</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-utensils"></i>
-              <p className="category__text">Food</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-tv"></i>
-              <p className="category__text">TV & Movies</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-gamepad"></i>
-              <p className="category__text">Gaming</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-route"></i>
-              <p className="category__text">Travel</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-tshirt"></i>
-              <p className="category__text">Fashion</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-headphones"></i>
-              <p className="category__text">Music</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-music"></i>
-              <p className="category__text">Dance</p>
-            </a>
-            <a href="" className="category">
-              <i className="fas fa-camera"></i>
-              <p className="category__text">Photography</p>
-            </a>
-          </div>
-        </section>
-        <section className="profiles">
-          <p className="profiles__sub-title">All Profiles</p>
-          <h2>Find Your Next Influencer</h2>
-          <UserProfiles users={users} />
-        </section>
+          <section className="featured">
+            <h3>Featured</h3>
+            <FeaturedUsers users={users} />
+          </section>
+          <section className="categories">
+            <h3>Categories</h3>
+            <div className="categories__container">
+              <a href="" className="category">
+                <i className="fas fa-volleyball-ball"></i>
+                <p className="category__text">Sports</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-utensils"></i>
+                <p className="category__text">Food</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-tv"></i>
+                <p className="category__text">TV & Movies</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-gamepad"></i>
+                <p className="category__text">Gaming</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-route"></i>
+                <p className="category__text">Travel</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-tshirt"></i>
+                <p className="category__text">Fashion</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-headphones"></i>
+                <p className="category__text">Music</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-music"></i>
+                <p className="category__text">Dance</p>
+              </a>
+              <a href="" className="category">
+                <i className="fas fa-camera"></i>
+                <p className="category__text">Photography</p>
+              </a>
+            </div>
+          </section>
+          <section className="profiles">
+            <p className="profiles__sub-title">All Profiles</p>
+            <h2>Find Your Next Influencer</h2>
+            <UserProfiles users={users} />
+          </section>
         </main>
       </div>
     );
