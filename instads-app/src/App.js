@@ -50,9 +50,11 @@ class App extends React.Component {
   }
   login(authData) {
     this._api.login(authData);
+    this.closeLoginModal();
   }
   signup(signupData) {
     this._api.signup(signupData);
+    this.closeSignupModal();
   }
   render() {
     if (!this.state.users && !this.state.error) {
