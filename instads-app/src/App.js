@@ -12,13 +12,21 @@ class App extends React.Component {
   _api;
   constructor(props) {
     super(props);
-    this.state = { filter: null, users: null, error: null, isLoginModalOpen: false, isSignupModalOpen: false };
+    this.state = {
+      filter: null,
+      users: null,
+      error: null,
+      isLoginModalOpen: false,
+      isSignupModalOpen: false
+    };
     this._api = new Api();
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.openLoginModal = this.openLoginModal.bind(this);
     this.closeLoginModal = this.closeLoginModal.bind(this);
     this.openSignupModal = this.openSignupModal.bind(this);
     this.closeSignupModal = this.closeSignupModal.bind(this);
+    this.login = this.login.bind(this);
+    this.signup = this.signup.bind(this);
   }
   componentDidMount() {
     this._api.getUsers()
@@ -39,6 +47,12 @@ class App extends React.Component {
   }
   closeSignupModal() {
     this.setState({ isSignupModalOpen: false });
+  }
+  login(authData) {
+    this._api.login(authData);
+  }
+  signup(signupData) {
+    this._api.signup(signupData);
   }
   render() {
     if (!this.state.users && !this.state.error) {
@@ -136,8 +150,14 @@ class App extends React.Component {
             </section>
           </main>
         </div>
-        <Login isOpen={this.state.isLoginModalOpen} closeModal={this.closeLoginModal} signup={this.openSignupModal} />
-        <Signup isOpen={this.state.isSignupModalOpen} closeModal={this.closeSignupModal} login={this.openLoginModal} />
+        <Login isOpen={this.state.isLoginModalOpen}
+          closeModal={this.closeLoginModal}
+          signup={this.openSignupModal}
+          login={this.login} />
+        <Signup isOpen={this.state.isSignupModalOpen}
+          closeModal={this.closeSignupModal}
+          login={this.openLoginModal}
+          signup={this.signup} />
       </body>
     );
   }

@@ -3,8 +3,26 @@ import Modal from 'react-modal';
 
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+    }
+    handleEmailChange(event) {
+        this.setState({ email: event.target.value });
+    }
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value });
+    }
+    handleLogin(e, callback) {
+        e.preventDefault();
+        callback(this.state);
+    }
     render() {
         let modalIsOpen = this.props.isOpen;
+
         return (
             <Modal
                 onRequestClose={this.props.closeModal}
@@ -28,8 +46,8 @@ class Login extends React.Component {
                     <div className="divider">
                         <span>OR</span>
                     </div>
-                    <form action="" class="modal-content__form">
-                        <input
+                    <form onSubmit={(e) => this.handleLogin(e, this.props.login)} className="modal-content__form">
+                        <input onChange={this.handleEmailChange}
                             type="text"
                             name=""
                             id=""
@@ -37,7 +55,7 @@ class Login extends React.Component {
                             placeholder="Enter your email"
                             required
                         />
-                        <input
+                        <input onChange={this.handlePasswordChange}
                             type="password"
                             name=""
                             id=""
@@ -45,7 +63,7 @@ class Login extends React.Component {
                             placeholder="Password"
                             required
                         />
-                        <button>Continue</button>
+                        <input type="submit" value="Continue" />
                     </form>
                     <div className="divider"></div>
                     <div className="modal-footer">
