@@ -1,0 +1,79 @@
+import React from "react";
+import Modal from 'react-modal';
+
+
+class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+    }
+    handleEmailChange(event) {
+        this.setState({ email: event.target.value });
+    }
+    handlePasswordChange(event) {
+        this.setState({ password: event.target.value });
+    }
+    handleLogin(e, callback) {
+        e.preventDefault();
+        callback(this.state);
+    }
+    render() {
+        let modalIsOpen = this.props.isOpen;
+
+        return (
+            <Modal
+                onRequestClose={this.props.closeModal}
+                isOpen={modalIsOpen}>
+                <div className="modal-content">
+                    <h1>Login</h1>
+                    <div className="modal-content__social">
+                        <button className="facebook-signing-button">
+                            <i className="fab fa-facebook-square"></i>
+                            <p>
+                                Continue with Facebook
+            </p>
+                        </button>
+                        <button className="google-signing-button">
+                            <i className="fab fa-google"></i>
+                            <p>
+                                Continue with Google
+            </p>
+                        </button>
+                    </div>
+                    <div className="divider">
+                        <span>OR</span>
+                    </div>
+                    <form onSubmit={(e) => this.handleLogin(e, this.props.login)} className="modal-content__form">
+                        <input onChange={this.handleEmailChange}
+                            type="text"
+                            name=""
+                            id=""
+                            className="modal-content__email"
+                            placeholder="Enter your email"
+                            required
+                        />
+                        <input onChange={this.handlePasswordChange}
+                            type="password"
+                            name=""
+                            id=""
+                            className="password"
+                            placeholder="Password"
+                            required
+                        />
+                        <input type="submit" value="Continue" />
+                    </form>
+                    <div className="divider"></div>
+                    <div className="modal-footer">
+                        <p>Not a member?</p>
+                        <a onClick={this.props.signup} className="open-signup">Sign Up</a>
+                    </div>
+                </div>
+            </Modal>
+        );
+    }
+}
+
+export default Login;
