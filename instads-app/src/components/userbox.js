@@ -1,4 +1,7 @@
 import React from "react";
+import { faInstagram, faWhatsapp, } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class UserBox extends React.Component {
     render() {
@@ -23,13 +26,13 @@ class UserBox extends React.Component {
                     </div>
                     <div className="profile__contact">
                         <a href={instagramUrl} className="instagram">
-                            <i className="fab fa-instagram"></i>
+                            <FontAwesomeIcon icon={faInstagram} />
                         </a>
                         <a href={whatsappUrl} className="whatsapp">
-                            <i className="fab fa-whatsapp"></i>
+                            <FontAwesomeIcon icon={faWhatsapp} />
                         </a>
                         <a href={mailUrl} className="email">
-                            <i className="far fa-envelope"></i>
+                            <FontAwesomeIcon icon={faEnvelope} />
                         </a>
                     </div>
                 </div >

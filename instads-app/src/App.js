@@ -1,4 +1,8 @@
 import React from 'react';
+import { faInstagram, faWhatsapp, } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from './logo.svg';
 import './App.css';
 import FeaturedUsers from "./components/featuredUsers";
@@ -27,11 +31,15 @@ class App extends React.Component {
     this.closeSignupModal = this.closeSignupModal.bind(this);
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
+    this.loadUsers = this.loadUsers.bind(this);
   }
-  componentDidMount() {
+  loadUsers() {
     this._api.getUsers()
       .then(users => { this.setState({ users: users, error: null }); })
       .catch(error => { this.setState({ error: error }); });
+  }
+  componentDidMount() {
+    this.loadUsers();
   }
   handleFilterChange(event) {
     this.setState({ filter: event.target.value });
@@ -50,11 +58,13 @@ class App extends React.Component {
   }
   login(authData) {
     this._api.login(authData)
-      .then(() => this.closeLoginModal());
+      .then(() => this.closeLoginModal())
+      .then(() => this.loadUsers());
   }
   signup(signupData) {
     this._api.signup(signupData)
-      .then(() => this.closeSignupModal());
+      .then(() => this.closeSignupModal())
+      .then(() => this.loadUsers());
   }
   render() {
     if (!this.state.users && !this.state.error) {
@@ -109,39 +119,39 @@ class App extends React.Component {
               <h3>Categories</h3>
               <div className="categories__container">
                 <a href="" className="category">
-                  <i className="fas fa-volleyball-ball"></i>
+                  <FontAwesomeIcon icon={faVolleyballBall} />
                   <p className="category__text">Sports</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-utensils"></i>
+                  <FontAwesomeIcon icon={faUtensils} />
                   <p className="category__text">Food</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-tv"></i>
+                  <FontAwesomeIcon icon={faTv} />
                   <p className="category__text">TV & Movies</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-gamepad"></i>
+                  <FontAwesomeIcon icon={faGamepad} />
                   <p className="category__text">Gaming</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-route"></i>
+                  <FontAwesomeIcon icon={faRoute} />
                   <p className="category__text">Travel</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-tshirt"></i>
+                  <FontAwesomeIcon icon={faTshirt} />
                   <p className="category__text">Fashion</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-headphones"></i>
+                  <FontAwesomeIcon icon={faHeadphones} />
                   <p className="category__text">Music</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-music"></i>
+                  <FontAwesomeIcon icon={faMusic} />
                   <p className="category__text">Dance</p>
                 </a>
                 <a href="" className="category">
-                  <i className="fas fa-camera"></i>
+                  <FontAwesomeIcon icon={faCamera} />
                   <p className="category__text">Photography</p>
                 </a>
               </div>
