@@ -30,6 +30,8 @@ class App extends React.Component {
     this.login = this.login.bind(this);
     this.signup = this.signup.bind(this);
     this.loadUsers = this.loadUsers.bind(this);
+    this.gotoUserPage = this.gotoUserPage.bind(this);
+    this.filterByCategory = this.filterByCategory.bind(this);
   }
   loadUsers() {
     this._api.getUsers()
@@ -41,6 +43,9 @@ class App extends React.Component {
   }
   handleFilterChange(event) {
     this.setState({ filter: event.target.value });
+  }
+  gotoUserPage() {
+
   }
   openLoginModal() {
     this.setState({ isLoginModalOpen: true, isSignupModalOpen: false });
@@ -65,6 +70,9 @@ class App extends React.Component {
       .then(() => this.closeSignupModal())
       .then(() => this.loadUsers());
   }
+  filterByCategory(category) {
+    this.setState({ filter: category });
+  }
   render() {
     if (!this.state.users && !this.state.error) {
       return <p>Loading....</p>
@@ -74,16 +82,14 @@ class App extends React.Component {
     }
     let users = this.state.users;
     if (this.state.filter) {
-      users = users.filter(user => user.name.includes(this.state.filter));
+      users = users.filter(user => user.categories.includes(this.state.filter));
     }
     var button;
     if (this.state.username) {
-      button = <a onClick={this.openLoginModal}>{this.state.username}</a>;
+      button = <a onClick={this.gotoUserPage}>{this.state.username}</a>;
     } else {
       button = (<a onClick={this.openLoginModal}>Sign in</a>);
     }
-
-
     return (
       <body>
         <div className="container">
@@ -125,39 +131,39 @@ class App extends React.Component {
             <section className="categories">
               <h3>Categories</h3>
               <div className="categories__container">
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Sports")} className="category">
                   <FontAwesomeIcon icon={faVolleyballBall} />
                   <p className="category__text">Sports</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Food")} className="category">
                   <FontAwesomeIcon icon={faUtensils} />
                   <p className="category__text">Food</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("TV & Movies")} className="category">
                   <FontAwesomeIcon icon={faTv} />
                   <p className="category__text">TV & Movies</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Gaming")} className="category">
                   <FontAwesomeIcon icon={faGamepad} />
                   <p className="category__text">Gaming</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Travel")} className="category">
                   <FontAwesomeIcon icon={faRoute} />
                   <p className="category__text">Travel</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Fashion")} className="category">
                   <FontAwesomeIcon icon={faTshirt} />
                   <p className="category__text">Fashion</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Music")} className="category">
                   <FontAwesomeIcon icon={faHeadphones} />
                   <p className="category__text">Music</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Dance")} className="category">
                   <FontAwesomeIcon icon={faMusic} />
                   <p className="category__text">Dance</p>
                 </a>
-                <a href="" className="category">
+                <a onClick={() => this.filterByCategory("Photography")} className="category">
                   <FontAwesomeIcon icon={faCamera} />
                   <p className="category__text">Photography</p>
                 </a>

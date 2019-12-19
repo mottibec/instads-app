@@ -1,19 +1,19 @@
 import axios from "axios";
 
 class Api {
-    rootUrl = "https://instads.herokuapp.com";
+    rootUrl = window.location.href || "https://instads.herokuapp.com/";
     authTokenHeader;
     async getUsers() {
-        var response = await axios.get(`${this.rootUrl}/users`);
+        var response = await axios.get(`${this.rootUrl}users`);
         return response.data;
     }
     async login(auth) {
-        var response = await axios.post(`${this.rootUrl}/auth/login`, auth);
+        var response = await axios.post(`${this.rootUrl}auth/login`, auth);
         this.setToken(response.data.access_token);
         return response.data.username;
     }
     async signup(signupData) {
-        var response = await axios.post(`${this.rootUrl}/auth/signup`, signupData);
+        var response = await axios.post(`${this.rootUrl}auth/signup`, signupData);
         this.setToken(response.data.access_token);
         return response.data.username;
     }
