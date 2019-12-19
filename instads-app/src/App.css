@@ -550,28 +550,24 @@ button:focus {
 .profiles__list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
       grid-template-columns: repeat(4, 1fr);
   grid-gap: 3rem;
 }
 
 @media only screen and (max-width: 1200px) {
   .profiles__list {
-    -ms-grid-columns: (1fr)[3];
         grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media only screen and (max-width: 900px) {
   .profiles__list {
-    -ms-grid-columns: (1fr)[2];
         grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media only screen and (max-width: 450px) {
   .profiles__list {
-    -ms-grid-columns: (1fr)[1];
         grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -813,9 +809,8 @@ button:focus {
 }
 
 @media only screen and (max-width: 50em) {
-  .footer .footer {
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
+  .footer {
+    grid-template-columns: 1fr;
     grid-row-gap: 1.25rem;
     justify-items: center;
   }

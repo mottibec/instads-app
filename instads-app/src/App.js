@@ -171,7 +171,7 @@ class App extends React.Component {
               <UserProfiles users={users} />
             </section>
           </main>
-          <li class='footer'>
+          <footer class='footer'>
             <div class='logo'>INSTADS</div>
             <ul class='footer__nav'>
               <li>
@@ -193,7 +193,7 @@ class App extends React.Component {
             <p class='footer__copyright'>
               &copy; by INSTADS. All rights reserved.
             </p>
-          </li>
+          </footer>
         </div>
         <Login
           isOpen={this.state.isLoginModalOpen}
