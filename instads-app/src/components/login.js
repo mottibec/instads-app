@@ -63,7 +63,7 @@ class Login extends React.Component {
                             placeholder="Password"
                             required
                         />
-                        <input type="submit" value="Continue" />
+                       <button>Continue</button>
                     </form>
                     <div className="divider"></div>
                     <div className="modal-footer">
