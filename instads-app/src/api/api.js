@@ -10,10 +10,12 @@ class Api {
     async login(auth) {
         var response = await axios.post(`${this.rootUrl}/auth/login`, auth);
         this.setToken(response.data.access_token);
+        return response.data.username;
     }
     async signup(signupData) {
         var response = await axios.post(`${this.rootUrl}/auth/signup`, signupData);
-        this.setToken(response.data);
+        this.setToken(response.data.access_token);
+        return response.data.username;
     }
     setToken(token) {
         this.authTokenHeader = `Authorization: Bearer ${token}`;

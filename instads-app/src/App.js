@@ -1,6 +1,4 @@
 import React from 'react';
-import { faInstagram, faWhatsapp, } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from './logo.svg';
@@ -58,6 +56,7 @@ class App extends React.Component {
   }
   login(authData) {
     this._api.login(authData)
+      .then(username => this.setState({ username: username }))
       .then(() => this.closeLoginModal())
       .then(() => this.loadUsers());
   }
@@ -77,6 +76,14 @@ class App extends React.Component {
     if (this.state.filter) {
       users = users.filter(user => user.name.includes(this.state.filter));
     }
+    var button;
+    if (this.state.username) {
+      button = <a onClick={this.openLoginModal}>{this.state.username}</a>;
+    } else {
+      button = (<a onClick={this.openLoginModal}>Sign in</a>);
+    }
+
+
     return (
       <body>
         <div className="container">
@@ -88,7 +95,7 @@ class App extends React.Component {
               <div className="nav__list">
                 <a href="">Contact</a>
                 <a href="">Help</a>
-                <a onClick={this.openLoginModal}>Sign in</a>
+                {button}
                 <button onClick={this.openSignupModal} className="join trigger">Become an Influencer</button>
               </div>
             </div>
