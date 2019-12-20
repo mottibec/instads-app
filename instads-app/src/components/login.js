@@ -1,5 +1,7 @@
 import React from "react";
 import Modal from 'react-modal';
+import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from "react-facebook-login";
 
 
 class Login extends React.Component {
@@ -20,28 +22,34 @@ class Login extends React.Component {
         e.preventDefault();
         callback(this.state);
     }
+    handleGoogleLogin(e, callback) {
+        if (callback) {
+            callback(e);
+        }
+    }
+    handleFacebookLogin(e, callback) {
+        console.log(e);
+        if (callback) {
+            callback(e);
+        }
+    }
     render() {
-        let modalIsOpen = this.props.isOpen;
-
         return (
             <Modal
                 onRequestClose={this.props.closeModal}
-                isOpen={modalIsOpen}>
+                isOpen={this.props.isOpen}>
                 <div className="modal-content">
                     <h1>Login</h1>
                     <div className="modal-content__social">
-                        <button className="facebook-signing-button">
-                            <i className="fab fa-facebook-square"></i>
-                            <p>
-                                Continue with Facebook
-            </p>
-                        </button>
-                        <button className="google-signing-button">
-                            <i className="fab fa-google"></i>
-                            <p>
-                                Continue with Google
-            </p>
-                        </button>
+                        <FacebookLogin className="facebook-signing-button"
+                            appId="992652077772172"
+                            fields="name,email,gender"
+                            callback={(auth) => this.handleFacebookLogin(auth, this.props.facebookLogin)} />
+                        <GoogleLogin className="google-signing-button"
+                            clientId="322429043104-g7p2h5vp2ufqf2j4fhhgknh5mbuvma60.apps.googleusercontent.com"
+                            buttonText="Continue with Google"
+                            onSuccess={(auth) => this.handleGoogleLogin(auth, this.props.googleLogin)}
+                            onFailure={this.handleGoogleLogin} />
                     </div>
                     <div className="divider">
                         <span>OR</span>
@@ -63,7 +71,7 @@ class Login extends React.Component {
                             placeholder="Password"
                             required
                         />
-                       <button>Continue</button>
+                        <button>Continue</button>
                     </form>
                     <div className="divider"></div>
                     <div className="modal-footer">

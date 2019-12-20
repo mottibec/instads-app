@@ -9,6 +9,7 @@ import Api from './api/api';
 import NavCategories from './components/navCategories';
 import Login from './components/login';
 import Signup from './components/signup';
+import UserDetails from "./components/userDetails";
 
 class App extends React.Component {
   _api
@@ -24,14 +25,17 @@ class App extends React.Component {
     this._api = new Api();
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.openLoginModal = this.openLoginModal.bind(this);
-    this.closeLoginModal = this.closeLoginModal.bind(this);
     this.openSignupModal = this.openSignupModal.bind(this);
-    this.closeSignupModal = this.closeSignupModal.bind(this);
+    this.closeAuthModals = this.closeAuthModals.bind(this);
     this.login = this.login.bind(this);
+    this.googleLogin = this.googleLogin.bind(this);
+    this.facebookLogin = this.facebookLogin.bind(this);
     this.signup = this.signup.bind(this);
     this.loadUsers = this.loadUsers.bind(this);
-    this.gotoUserPage = this.gotoUserPage.bind(this);
+    this.openUserModal = this.openUserModal.bind(this);
+    this.closeUserModal = this.closeUserModal.bind(this);
     this.filterByCategory = this.filterByCategory.bind(this);
+    this.saveUser = this.saveUser.bind(this);
   }
   loadUsers() {
     this._api.getUsers()
@@ -44,31 +48,50 @@ class App extends React.Component {
   handleFilterChange(event) {
     this.setState({ filter: event.target.value })
   }
-  gotoUserPage() {
-
+  openUserModal() {
+    this.setState({ isUserModalOpen: true })
+  }
+  closeUserModal() {
+    this.setState({ isUserModalOpen: false });
   }
   openLoginModal() {
     this.setState({ isLoginModalOpen: true, isSignupModalOpen: false })
   }
-  closeLoginModal() {
-    this.setState({ isLoginModalOpen: false })
-  }
   openSignupModal() {
     this.setState({ isSignupModalOpen: true, isLoginModalOpen: false })
   }
-  closeSignupModal() {
-    this.setState({ isSignupModalOpen: false })
+  closeAuthModals() {
+    this.setState({ isLoginModalOpen: false, isSignupModalOpen: false })
+  }
+  onAuth(username) {
+    this.setState({ username: username });
+    this.closeAuthModals();
+    this.loadUsers();
+    this.setUserDeatils();
+  }
+  saveUser(u) {
+    console.log(u);
+    this.closeUserModal();
+  }
+  setUserDeatils() {
+    this._api.getUserDetails()
+      .then(user => this.setState({ user: user }));
   }
   login(authData) {
     this._api.login(authData)
-      .then(username => this.setState({ username: username }))
-      .then(() => this.closeLoginModal())
-      .then(() => this.loadUsers());
+      .then(username => this.onAuth(username));
+  }
+  googleLogin(authData) {
+    this._api.googleLogin(authData)
+      .then(username => this.onAuth(username));
+  }
+  facebookLogin(authData) {
+    this._api.facebookLogin(authData)
+      .then(username => this.onAuth(username));
   }
   signup(signupData) {
     this._api.signup(signupData)
-      .then(() => this.closeSignupModal())
-      .then(() => this.loadUsers());
+      .then(username => this.onAuth(username));
   }
   filterByCategory(category) {
     this.setState({ filter: category });
@@ -86,7 +109,7 @@ class App extends React.Component {
     }
     var button;
     if (this.state.username) {
-      button = <a onClick={this.gotoUserPage}>{this.state.username}</a>;
+      button = <a onClick={this.openUserModal}>{this.state.username}</a>;
     } else {
       button = (<a onClick={this.openLoginModal}>Sign in</a>);
     }
@@ -218,13 +241,22 @@ class App extends React.Component {
           closeModal={this.closeLoginModal}
           signup={this.openSignupModal}
           login={this.login}
+          googleLogin={this.googleLogin}
+          facebookLogin={this.facebookLogin}
         />
         <Signup
           isOpen={this.state.isSignupModalOpen}
           closeModal={this.closeSignupModal}
           login={this.openLoginModal}
           signup={this.signup}
+          googleLogin={this.googleLogin}
+          facebookLogin={this.facebookLogin}
         />
+        <UserDetails
+          closeModal={this.closeUserModal}
+          onSave={this.saveUser}
+          isOpen={this.state.isUserModalOpen}
+          user={this.state.user} />
       </body>
     )
   }
