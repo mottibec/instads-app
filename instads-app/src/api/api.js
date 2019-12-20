@@ -12,16 +12,33 @@ class Api {
         this.setToken(response.data.access_token);
         return response.data.username;
     }
+    async googleLogin(authToken) {
+        var response = await axios.post(`${this.rootUrl}auth/google`, authToken);
+        this.setToken(response.data.access_token);
+        return response.data.username;
+    }
+    async facebookLogin(authToken) {
+        var response = await axios.post(`${this.rootUrl}auth/facebook`, authToken);
+        this.setToken(response.data.access_token);
+        return response.data.username;
+    }
     async signup(signupData) {
         var response = await axios.post(`${this.rootUrl}auth/signup`, signupData);
         this.setToken(response.data.access_token);
         return response.data.username;
     }
-    setToken(token) {
-        this.authTokenHeader = `Authorization: Bearer ${token}`;
+    getUserDetails() {
+        return this.getAuthenticated(`${this.rootUrl}user`);
     }
-    getAuthenticated(url) {
-        return axios.get(url, { headers: this.authTokenHeader });
+    setToken(token) {
+        this.authTokenHeader = { 'Authorization': `Bearer ${token}` };
+    }
+    async getAuthenticated(url) {
+        const options = {
+            headers: this.authTokenHeader
+        };
+        var response = await axios.get(url, options);
+        return response.data;
     }
     postAuthenticated(url, body) {
         return axios.post(url, body, { headers: this.authTokenHeader });
