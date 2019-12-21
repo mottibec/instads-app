@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class Api {
-    rootUrl = window.location.href || "https://instads.herokuapp.com/";
+    rootUrl = "http://localhost:4000/";
     authTokenHeader;
     async getUsers() {
         var response = await axios.get(`${this.rootUrl}users`);
@@ -20,11 +20,15 @@ class Api {
     async facebookLogin(authToken) {
         var response = await axios.post(`${this.rootUrl}auth/facebook`, authToken);
         this.setToken(response.data.access_token);
-        return response.data.username;
+        return response.data;
     }
     async signup(signupData) {
         var response = await axios.post(`${this.rootUrl}auth/signup`, signupData);
         this.setToken(response.data.access_token);
+        return response.data.username;
+    }
+    async completeSocailSignup(signupData) {
+        var response = await this.postAuthenticated(`${this.rootUrl}auth/complete`, signupData);
         return response.data.username;
     }
     getUserDetails() {
@@ -41,7 +45,10 @@ class Api {
         return response.data;
     }
     postAuthenticated(url, body) {
-        return axios.post(url, body, { headers: this.authTokenHeader });
+        const options = {
+            headers: this.authTokenHeader
+        };
+        return axios.post(url, body, options);
     }
 
 }
