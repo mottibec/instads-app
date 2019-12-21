@@ -9,6 +9,7 @@ import Api from './api/api';
 import NavCategories from './components/navCategories';
 import Login from './components/login';
 import Signup from './components/signup';
+import CompleteSignup from "./components/completeSignup";
 import UserDetails from "./components/userDetails";
 
 class App extends React.Component {
@@ -36,6 +37,7 @@ class App extends React.Component {
     this.closeUserModal = this.closeUserModal.bind(this);
     this.filterByCategory = this.filterByCategory.bind(this);
     this.saveUser = this.saveUser.bind(this);
+    this.completeSocailSignup = this.completeSocailSignup.bind(this);
   }
   loadUsers() {
     this._api.getUsers()
@@ -61,7 +63,7 @@ class App extends React.Component {
     this.setState({ isSignupModalOpen: true, isLoginModalOpen: false })
   }
   closeAuthModals() {
-    this.setState({ isLoginModalOpen: false, isSignupModalOpen: false })
+    this.setState({ isLoginModalOpen: false, isSignupModalOpen: false, isCompleteSignupModalOpen: false })
   }
   onAuth(username) {
     this.setState({ username: username });
@@ -70,7 +72,6 @@ class App extends React.Component {
     this.setUserDeatils();
   }
   saveUser(u) {
-    console.log(u);
     this.closeUserModal();
   }
   setUserDeatils() {
@@ -87,10 +88,21 @@ class App extends React.Component {
   }
   facebookLogin(authData) {
     this._api.facebookLogin(authData)
-      .then(username => this.onAuth(username));
+      .then(dada => {
+        if (dada.isNewUser) {
+          this.setState({ isCompleteSignupModalOpen: true });
+        }
+        else {
+          this.onAuth(dada.username)
+        }
+      });
   }
   signup(signupData) {
     this._api.signup(signupData)
+      .then(username => this.onAuth(username));
+  }
+  completeSocailSignup(signupData) {
+    this._api.completeSocailSignup(signupData)
       .then(username => this.onAuth(username));
   }
   filterByCategory(category) {
@@ -238,7 +250,7 @@ class App extends React.Component {
         </div>
         <Login
           isOpen={this.state.isLoginModalOpen}
-          closeModal={this.closeLoginModal}
+          closeModal={this.closeAuthModals}
           signup={this.openSignupModal}
           login={this.login}
           googleLogin={this.googleLogin}
@@ -246,12 +258,15 @@ class App extends React.Component {
         />
         <Signup
           isOpen={this.state.isSignupModalOpen}
-          closeModal={this.closeSignupModal}
+          closeModal={this.closeAuthModals}
           login={this.openLoginModal}
           signup={this.signup}
           googleLogin={this.googleLogin}
           facebookLogin={this.facebookLogin}
         />
+        <CompleteSignup
+          isOpen={this.state.isCompleteSignupModalOpen}
+          completeSignup={this.completeSocailSignup} />
         <UserDetails
           closeModal={this.closeUserModal}
           onSave={this.saveUser}
