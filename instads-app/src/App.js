@@ -90,7 +90,7 @@ class App extends React.Component {
     this._api.facebookLogin(authData)
       .then(dada => {
         if (dada.isNewUser) {
-          this.setState({ isCompleteSignupModalOpen: true });
+          this.setState({ isSignupModalOpen: false, isCompleteSignupModalOpen: true });
         }
         else {
           this.onAuth(dada.username)
