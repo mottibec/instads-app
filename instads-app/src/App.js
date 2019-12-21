@@ -2,6 +2,7 @@ import React from 'react';
 import { faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from './logo.svg';
+import bg from "./bg.svg";
 import './App.css';
 import FeaturedUsers from "./components/featuredUsers";
 import UserProfiles from "./components/userProfiles";
@@ -119,9 +120,12 @@ class App extends React.Component {
     if (this.state.filter) {
       users = users.filter(user => user.categories.includes(this.state.filter));
     }
+    var isSignedIn = false;
     var button;
+
     if (this.state.username) {
       button = <a onClick={this.openUserModal}>{this.state.username}</a>;
+      isSignedIn = true;
     } else {
       button = (<a onClick={this.openLoginModal}>Sign in</a>);
     }
@@ -139,7 +143,7 @@ class App extends React.Component {
                 <a href="">Contact</a>
                 <a href="">Help</a>
                 {button}
-                <button onClick={this.openSignupModal} className="join trigger">Become an Influencer</button>
+                {isSignedIn ? null : <button onClick={this.openSignupModal} className="join trigger">Become an Influencer</button>}
               </div>
             </div>
             <NavCategories />
@@ -167,7 +171,7 @@ class App extends React.Component {
               </button>
               </div>
               <div className='header__bg'>
-                <img src='./img/bg.svg' alt='background' />
+                <img src={bg} alt='background' />
               </div>
 
             </div>
