@@ -8,7 +8,7 @@ import FeaturedUsers from "./components/featuredUsers";
 import UserProfiles from "./components/userProfiles";
 import Api from './api/api';
 import NavCategories from './components/navCategories';
-import Login from './components/login';
+import Signin from './components/signin';
 import Signup from './components/signup';
 import CompleteSignup from "./components/completeSignup";
 import UserDetails from "./components/userDetails";
@@ -252,7 +252,7 @@ class App extends React.Component {
             </p>
           </footer>
         </div>
-        <Login
+        <Signin
           isOpen={this.state.isLoginModalOpen}
           closeModal={this.closeAuthModals}
           signup={this.openSignupModal}

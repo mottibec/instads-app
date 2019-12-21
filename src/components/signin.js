@@ -1,10 +1,9 @@
 import React from "react";
 import Modal from 'react-modal';
-import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from "react-facebook-login";
 
 
-class Login extends React.Component {
+class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -23,6 +22,7 @@ class Login extends React.Component {
         callback(this.state);
     }
     handleGoogleLogin(e, callback) {
+        console.log(e);
         if (callback) {
             callback(e);
         }
@@ -45,11 +45,6 @@ class Login extends React.Component {
                             appId="992652077772172"
                             fields="name,email,gender"
                             callback={(auth) => this.handleFacebookLogin(auth, this.props.facebookLogin)} />
-                        <GoogleLogin className="google-signing-button"
-                            clientId="322429043104-g7p2h5vp2ufqf2j4fhhgknh5mbuvma60.apps.googleusercontent.com"
-                            buttonText="Continue with Google"
-                            onSuccess={(auth) => this.handleGoogleLogin(auth, this.props.googleLogin)}
-                            onFailure={this.handleGoogleLogin} />
                     </div>
                     <div className="divider">
                         <span>OR</span>
@@ -84,4 +79,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Signin;

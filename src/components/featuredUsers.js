@@ -1,6 +1,5 @@
 import React from "react";
 import UserBox from "./userbox";
-import { Carousel } from "react-responsive-carousel";
 
 class FeaturedUsers extends React.Component {
     render() {
