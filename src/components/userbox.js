@@ -11,11 +11,11 @@ class UserBox extends React.Component {
         return (
             <div className="profile">
                 <div className="profile__bg">
-                    <img src={this.props.user.topPost} alt="" className="profile__img" />
+                    <img src={this.props.user.topPost} className="profile__img" />
                 </div>
                 <div className="profile__content">
                     <div className="profile__img">
-                        <img src={this.props.user.avatar} alt="" />
+                        <img src={this.props.user.avatar} />
                     </div>
                     <div className="profile__personal-info">
                         <h4 className="profile__name">{this.props.user.name}</h4>
