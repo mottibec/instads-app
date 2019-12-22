@@ -1,13 +1,14 @@
 import React from 'react';
-import { faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from './logo.svg';
+import bg from "./bg.svg";
 import './App.css';
 import FeaturedUsers from "./components/featuredUsers";
 import UserProfiles from "./components/userProfiles";
 import Api from './api/api';
 import NavCategories from './components/navCategories';
-import Login from './components/login';
+import Signin from './components/signin';
 import Signup from './components/signup';
 import CompleteSignup from "./components/completeSignup";
 import UserDetails from "./components/userDetails";
@@ -65,8 +66,7 @@ class App extends React.Component {
   closeAuthModals() {
     this.setState({ isLoginModalOpen: false, isSignupModalOpen: false, isCompleteSignupModalOpen: false })
   }
-  onAuth(username) {
-    this.setState({ username: username });
+  onAuth() {
     this.closeAuthModals();
     this.loadUsers();
     this.setUserDeatils();
@@ -80,30 +80,26 @@ class App extends React.Component {
   }
   login(authData) {
     this._api.login(authData)
-      .then(username => this.onAuth(username));
-  }
-  googleLogin(authData) {
-    this._api.googleLogin(authData)
-      .then(username => this.onAuth(username));
+      .then(() => this.onAuth());
   }
   facebookLogin(authData) {
     this._api.facebookLogin(authData)
       .then(dada => {
-        if (dada.isNewUser) {
+        if (!dada.isProfileComplete) {
           this.setState({ isSignupModalOpen: false, isCompleteSignupModalOpen: true });
         }
         else {
-          this.onAuth(dada.username)
+          this.onAuth()
         }
       });
   }
   signup(signupData) {
     this._api.signup(signupData)
-      .then(username => this.onAuth(username));
+      .then(() => this.onAuth());
   }
   completeSocailSignup(signupData) {
     this._api.completeSocailSignup(signupData)
-      .then(username => this.onAuth(username));
+      .then(() => this.onAuth());
   }
   filterByCategory(category) {
     this.setState({ filter: category });
@@ -119,9 +115,13 @@ class App extends React.Component {
     if (this.state.filter) {
       users = users.filter(user => user.categories.includes(this.state.filter));
     }
+    let featuredUsers = users.slice(0, 4);
+    var isSignedIn = false;
     var button;
-    if (this.state.username) {
-      button = <a onClick={this.openUserModal}>{this.state.username}</a>;
+
+    if (this.state.user) {
+      button = <a onClick={this.openUserModal}>{this.state.user.name}</a>;
+      isSignedIn = true;
     } else {
       button = (<a onClick={this.openLoginModal}>Sign in</a>);
     }
@@ -139,7 +139,7 @@ class App extends React.Component {
                 <a href="">Contact</a>
                 <a href="">Help</a>
                 {button}
-                <button onClick={this.openSignupModal} className="join trigger">Become an Influencer</button>
+                {isSignedIn ? null : <button onClick={this.openSignupModal} className="join trigger">Become an Influencer</button>}
               </div>
             </div>
             <NavCategories />
@@ -152,22 +152,19 @@ class App extends React.Component {
                   For Your Business
                 </h1>
                 <label className='header__search-box'>
-                  <i className='fas fa-search'></i>
-                  <input
-                    type='text'
-                    name=''
-                    id=''
+                  <FontAwesomeIcon icon={faSearch} />
+                  <input type='text'
                     onChange={this.handleFilterChange}
                     className='header__search'
-                    placeholder='Try "Photography"'
-                  />
+                    placeholder='Try "Photography"' />
                 </label>
-                <button onClick={this.openSignupModal} className='join trigger responsive-signup'>
+                <button onClick={this.openSignupModal}
+                  className='join trigger responsive-signup'>
                   Become an Influencer
               </button>
               </div>
               <div className='header__bg'>
-                <img src='./img/bg.svg' alt='background' />
+                <img src={bg} alt='background' />
               </div>
 
             </div>
@@ -175,7 +172,7 @@ class App extends React.Component {
           <main className='main'>
             <section className='featured'>
               <h3>Featured</h3>
-              <FeaturedUsers users={users} />
+              <FeaturedUsers users={featuredUsers} />
             </section>
             <section className='categories'>
               <h3>Categories</h3>
@@ -248,22 +245,18 @@ class App extends React.Component {
             </p>
           </footer>
         </div>
-        <Login
+        <Signin
           isOpen={this.state.isLoginModalOpen}
           closeModal={this.closeAuthModals}
           signup={this.openSignupModal}
           login={this.login}
-          googleLogin={this.googleLogin}
-          facebookLogin={this.facebookLogin}
-        />
+          facebookLogin={this.facebookLogin} />
         <Signup
           isOpen={this.state.isSignupModalOpen}
           closeModal={this.closeAuthModals}
           login={this.openLoginModal}
           signup={this.signup}
-          googleLogin={this.googleLogin}
-          facebookLogin={this.facebookLogin}
-        />
+          facebookLogin={this.facebookLogin} />
         <CompleteSignup
           isOpen={this.state.isCompleteSignupModalOpen}
           completeSignup={this.completeSocailSignup} />

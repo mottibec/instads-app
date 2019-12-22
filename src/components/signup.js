@@ -1,16 +1,17 @@
 import React from "react";
 import Modal from 'react-modal';
-import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from "react-facebook-login";
 
 
-class Login extends React.Component {
+class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.handlePhoneChange = this.handlePhoneChange.bind(this);
+        this.handleInstagramChange = this.handleInstagramChange.bind(this);
+        this.handleSignup = this.handleSignup.bind(this);
     }
     handleEmailChange(event) {
         this.setState({ email: event.target.value });
@@ -18,14 +19,15 @@ class Login extends React.Component {
     handlePasswordChange(event) {
         this.setState({ password: event.target.value });
     }
-    handleLogin(e, callback) {
+    handlePhoneChange(event) {
+        this.setState({ phone: event.target.value });
+    }
+    handleInstagramChange(event) {
+        this.setState({ instagram: event.target.value });
+    }
+    handleSignup(e, callback) {
         e.preventDefault();
         callback(this.state);
-    }
-    handleGoogleLogin(e, callback) {
-        if (callback) {
-            callback(e);
-        }
     }
     handleFacebookLogin(e, callback) {
         console.log(e);
@@ -34,33 +36,37 @@ class Login extends React.Component {
         }
     }
     render() {
+        let modalIsOpen = this.props.isOpen;
         return (
             <Modal
                 onRequestClose={this.props.closeModal}
-                isOpen={this.props.isOpen}>
+                isOpen={modalIsOpen}>
                 <div className="modal-content">
-                    <h1>Login</h1>
+                    <h1>Join INSTADS</h1>
                     <div className="modal-content__social">
                         <FacebookLogin className="facebook-signing-button"
                             appId="992652077772172"
                             fields="name,email,gender"
                             callback={(auth) => this.handleFacebookLogin(auth, this.props.facebookLogin)} />
-                        <GoogleLogin className="google-signing-button"
-                            clientId="322429043104-g7p2h5vp2ufqf2j4fhhgknh5mbuvma60.apps.googleusercontent.com"
-                            buttonText="Continue with Google"
-                            onSuccess={(auth) => this.handleGoogleLogin(auth, this.props.googleLogin)}
-                            onFailure={this.handleGoogleLogin} />
                     </div>
                     <div className="divider">
                         <span>OR</span>
                     </div>
-                    <form onSubmit={(e) => this.handleLogin(e, this.props.login)} className="modal-content__form">
+                    <form onSubmit={(e) => this.handleSignup(e, this.props.signup)} className="modal-content__form">
                         <input onChange={this.handleEmailChange}
                             type="text"
                             name=""
                             id=""
                             className="modal-content__email"
                             placeholder="Enter your email"
+                            required
+                        />
+                        <input onChange={this.handleInstagramChange}
+                            type="text"
+                            name=""
+                            id=""
+                            className="modal-content__instagram"
+                            placeholder="Link To Instagram"
                             required
                         />
                         <input onChange={this.handlePasswordChange}
@@ -71,12 +77,20 @@ class Login extends React.Component {
                             placeholder="Password"
                             required
                         />
+                        <input onChange={this.handlePhoneChange}
+                            type="text"
+                            name=""
+                            id=""
+                            className="modal-content__email"
+                            placeholder="Phone Number (Optional)"
+                        />
                         <button>Continue</button>
+                        <p>By joining I agree to receive emails from INSTADS.</p>
                     </form>
                     <div className="divider"></div>
                     <div className="modal-footer">
-                        <p>Not a member?</p>
-                        <a onClick={this.props.signup} className="open-signup">Sign Up</a>
+                        <p>Already a member?</p>
+                        <a onClick={this.props.login} className="open-login">Sign In</a>
                     </div>
                 </div>
             </Modal>
@@ -84,4 +98,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Signup;

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class Api {
-    rootUrl = window.location.href;
+    rootUrl = "https://instads.herokuapp.com/";
     authTokenHeader;
     async getUsers() {
         var response = await axios.get(`${this.rootUrl}users`);
