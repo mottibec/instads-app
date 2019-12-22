@@ -2,7 +2,6 @@ import React from "react";
 import Modal from 'react-modal';
 import FacebookLogin from "react-facebook-login";
 
-
 class Signup extends React.Component {
     constructor(props) {
         super(props);
@@ -30,23 +29,23 @@ class Signup extends React.Component {
         callback(this.state);
     }
     handleFacebookLogin(e, callback) {
-        console.log(e);
         if (callback) {
             callback(e);
         }
     }
     render() {
-        let modalIsOpen = this.props.isOpen;
         return (
             <Modal
                 onRequestClose={this.props.closeModal}
-                isOpen={modalIsOpen}>
+                isOpen={this.props.isOpen}>
                 <div className="modal-content">
                     <h1>Join INSTADS</h1>
                     <div className="modal-content__social">
-                        <FacebookLogin className="facebook-signing-button"
+                        <FacebookLogin cssClass="facebook-signing-button"
+                            textButton="Signup with Facebook"
                             appId="992652077772172"
                             fields="name,email,gender"
+                            disableMobileRedirect={true}
                             callback={(auth) => this.handleFacebookLogin(auth, this.props.facebookLogin)} />
                     </div>
                     <div className="divider">

@@ -2,7 +2,6 @@ import React from "react";
 import Modal from 'react-modal';
 import FacebookLogin from "react-facebook-login";
 
-
 class Signin extends React.Component {
     constructor(props) {
         super(props);
@@ -35,9 +34,10 @@ class Signin extends React.Component {
                 <div className="modal-content">
                     <h1>Login</h1>
                     <div className="modal-content__social">
-                        <FacebookLogin className="facebook-signing-button"
+                        <FacebookLogin cssClass="facebook-signing-button"
                             appId="992652077772172"
                             fields="name,email,gender"
+                            disableMobileRedirect={true}
                             callback={(auth) => this.handleFacebookLogin(auth, this.props.facebookLogin)} />
                     </div>
                     <div className="divider">
