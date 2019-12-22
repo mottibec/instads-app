@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
 import FeaturedUsers from './components/featuredUsers'
 import UserProfiles from './components/userProfiles'
