@@ -42,8 +42,8 @@ class UserBox extends React.Component {
                         <p>Followers</p>
                     </div>
                     <div className="profile__real">
-                        <h4>17%</h4>
-                        <p>Real Users</p>
+                        <h4>{this.props.user.activeFollowers}%</h4>
+                        <p>Active Users</p>
                     </div>
                     <div className="profile__price">
                         <h4>{this.props.user.priceForPost}$</h4>
