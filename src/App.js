@@ -66,7 +66,7 @@ class App extends React.Component {
   closeAuthModals() {
     this.setState({ isLoginModalOpen: false, isSignupModalOpen: false, isCompleteSignupModalOpen: false })
   }
-  onAuth(username) {
+  onAuth() {
     this.closeAuthModals();
     this.loadUsers();
     this.setUserDeatils();
@@ -80,30 +80,26 @@ class App extends React.Component {
   }
   login(authData) {
     this._api.login(authData)
-      .then(username => this.onAuth(username));
-  }
-  googleLogin(authData) {
-    this._api.googleLogin(authData)
-      .then(username => this.onAuth(username));
+      .then(() => this.onAuth());
   }
   facebookLogin(authData) {
     this._api.facebookLogin(authData)
       .then(dada => {
-        if (dada.isNewUser) {
+        if (!dada.isProfileComplete) {
           this.setState({ isSignupModalOpen: false, isCompleteSignupModalOpen: true });
         }
         else {
-          this.onAuth(dada.username)
+          this.onAuth()
         }
       });
   }
   signup(signupData) {
     this._api.signup(signupData)
-      .then(username => this.onAuth(username));
+      .then(() => this.onAuth());
   }
   completeSocailSignup(signupData) {
     this._api.completeSocailSignup(signupData)
-      .then(username => this.onAuth(username));
+      .then(() => this.onAuth());
   }
   filterByCategory(category) {
     this.setState({ filter: category });
