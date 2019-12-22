@@ -29,13 +29,6 @@ class Signup extends React.Component {
         e.preventDefault();
         callback(this.state);
     }
-
-    handleGoogleLogin(e, callback) {
-        console.log(e);
-        if (callback) {
-            callback(e);
-        }
-    }
     handleFacebookLogin(e, callback) {
         console.log(e);
         if (callback) {

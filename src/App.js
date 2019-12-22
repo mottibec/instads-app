@@ -1,5 +1,5 @@
 import React from 'react';
-import { faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faVolleyballBall, faUtensils, faTv, faGamepad, faRoute, faTshirt, faHeadphones, faMusic, faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from './logo.svg';
 import bg from "./bg.svg";
@@ -67,7 +67,6 @@ class App extends React.Component {
     this.setState({ isLoginModalOpen: false, isSignupModalOpen: false, isCompleteSignupModalOpen: false })
   }
   onAuth(username) {
-    this.setState({ username: username });
     this.closeAuthModals();
     this.loadUsers();
     this.setUserDeatils();
@@ -120,11 +119,12 @@ class App extends React.Component {
     if (this.state.filter) {
       users = users.filter(user => user.categories.includes(this.state.filter));
     }
+    let featuredUsers = users.slice(0, 4);
     var isSignedIn = false;
     var button;
 
-    if (this.state.username) {
-      button = <a onClick={this.openUserModal}>{this.state.username}</a>;
+    if (this.state.user) {
+      button = <a onClick={this.openUserModal}>{this.state.user.name}</a>;
       isSignedIn = true;
     } else {
       button = (<a onClick={this.openLoginModal}>Sign in</a>);
@@ -156,17 +156,14 @@ class App extends React.Component {
                   For Your Business
                 </h1>
                 <label className='header__search-box'>
-                  <i className='fas fa-search'></i>
-                  <input
-                    type='text'
-                    name=''
-                    id=''
+                  <FontAwesomeIcon icon={faSearch} />
+                  <input type='text'
                     onChange={this.handleFilterChange}
                     className='header__search'
-                    placeholder='Try "Photography"'
-                  />
+                    placeholder='Try "Photography"' />
                 </label>
-                <button onClick={this.openSignupModal} className='join trigger responsive-signup'>
+                <button onClick={this.openSignupModal}
+                  className='join trigger responsive-signup'>
                   Become an Influencer
               </button>
               </div>
@@ -179,7 +176,7 @@ class App extends React.Component {
           <main className='main'>
             <section className='featured'>
               <h3>Featured</h3>
-              <FeaturedUsers users={users} />
+              <FeaturedUsers users={featuredUsers} />
             </section>
             <section className='categories'>
               <h3>Categories</h3>
@@ -257,17 +254,13 @@ class App extends React.Component {
           closeModal={this.closeAuthModals}
           signup={this.openSignupModal}
           login={this.login}
-          googleLogin={this.googleLogin}
-          facebookLogin={this.facebookLogin}
-        />
+          facebookLogin={this.facebookLogin} />
         <Signup
           isOpen={this.state.isSignupModalOpen}
           closeModal={this.closeAuthModals}
           login={this.openLoginModal}
           signup={this.signup}
-          googleLogin={this.googleLogin}
-          facebookLogin={this.facebookLogin}
-        />
+          facebookLogin={this.facebookLogin} />
         <CompleteSignup
           isOpen={this.state.isCompleteSignupModalOpen}
           completeSignup={this.completeSocailSignup} />
