@@ -36,7 +36,7 @@ class App extends React.Component {
     this.openUserModal = this.openUserModal.bind(this);
     this.closeUserModal = this.closeUserModal.bind(this);
     this.filterByCategory = this.filterByCategory.bind(this);
-    this.saveUser = this.saveUser.bind(this);
+    this.updateUser = this.updateUser.bind(this);
     this.completeSocailSignup = this.completeSocailSignup.bind(this);
   }
   loadUsers() {
@@ -70,8 +70,9 @@ class App extends React.Component {
     this.loadUsers();
     this.setUserDeatils();
   }
-  saveUser(u) {
-    this.closeUserModal();
+  updateUser(u) {
+    this._api.updateUser(u)
+      .then(() => this.closeUserModal());
   }
   setUserDeatils() {
     this._api.getUserDetails()
@@ -261,7 +262,7 @@ class App extends React.Component {
           completeSignup={this.completeSocailSignup} />
         <UserDetails
           closeModal={this.closeUserModal}
-          onSave={this.saveUser}
+          onSave={this.updateUser}
           isOpen={this.state.isUserModalOpen}
           user={this.state.user} />
       </body>

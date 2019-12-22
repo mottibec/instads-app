@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class Api {
-    rootUrl = "https://instads.herokuapp.com/";
+    rootUrl = window.location.href || "https://instads.herokuapp.com/";
     authTokenHeader;
     async getUsers() {
         var response = await axios.get(`${this.rootUrl}users`);
@@ -34,6 +34,9 @@ class Api {
     getUserDetails() {
         return this.getAuthenticated(`${this.rootUrl}user`);
     }
+    updateUser(updateData) {
+        return this.putAuthenticated(`${this.rootUrl}users`, updateData);
+    }
     setToken(token) {
         this.authTokenHeader = { 'Authorization': `Bearer ${token}` };
     }
@@ -49,6 +52,12 @@ class Api {
             headers: this.authTokenHeader
         };
         return axios.post(url, body, options);
+    }
+    putAuthenticated(url, body) {
+        const options = {
+            headers: this.authTokenHeader
+        };
+        return axios.put(url, body, options);
     }
 
 }
