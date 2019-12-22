@@ -30,7 +30,6 @@ class App extends React.Component {
     this.openSignupModal = this.openSignupModal.bind(this);
     this.closeAuthModals = this.closeAuthModals.bind(this);
     this.login = this.login.bind(this);
-    this.googleLogin = this.googleLogin.bind(this);
     this.facebookLogin = this.facebookLogin.bind(this);
     this.signup = this.signup.bind(this);
     this.loadUsers = this.loadUsers.bind(this);
