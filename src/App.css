@@ -147,6 +147,18 @@ button:focus {
   cursor: pointer;
 }
 
+@media only screen and (max-width: 480px){
+  .nav__list a{
+    margin: 0.5rem 1.2rem;
+  }
+  .logo{
+    font-size: 2rem;
+  }
+  .nav__row{
+    padding: 4rem 3rem;
+  }
+}
+
 .nav__filters {
   display: none;
   visibility: hidden;
@@ -312,7 +324,7 @@ button:focus {
   display: -ms-grid;
   display: grid;
   grid-gap: 3rem;
-  grid-template-columns: repeat(3, 30rem);
+  grid-template-columns: repeat(4, 30rem);
   grid-template-rows: 1fr;
   overflow-x: scroll;
   padding-bottom: 3rem;
@@ -404,6 +416,9 @@ button:focus {
   -webkit-box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.15);
           box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .profile__bg {
@@ -525,6 +540,7 @@ button:focus {
 
 .profile__contact a {
   padding: 0 5px;
+  font-size: 2.4rem;
 }
 
 @media only screen and (max-width: 900px) {
